@@ -4,16 +4,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:miniproject/components/mybutton.dart';
 import 'package:miniproject/components/mytextfield.dart';
+import 'package:miniproject/services/authservice.dart';
 
-class RegisterPage extends StatefulWidget {
-  final Function()? onTap;
-  RegisterPage({super.key, required this.onTap});
+class GoogleRegisterPage extends StatefulWidget {
+  final String? email;
+  final AuthService? as;
+  GoogleRegisterPage({super.key, required this.email, required this.as});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<GoogleRegisterPage> createState() => _GoogleRegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _GoogleRegisterPageState extends State<GoogleRegisterPage> {
   final _usrnameController = TextEditingController();
 
   final _pswrdController = TextEditingController();
@@ -25,6 +27,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final _lastnmController = TextEditingController();
 
   final _ageController = TextEditingController();
+
+  @override
+  void initState(){
+    super.initState();
+    _usrnameController.text = widget.email!;
+  }
 
   Future addUserDetails(String uid, String fn, String ln, String em, int age) async {
     await FirebaseFirestore.instance.collection('users').add({
@@ -48,10 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     try{
       if(_cnfrmpswrdController.text.trim() == _pswrdController.text.trim()){
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _usrnameController.text.trim(), 
-          password: _pswrdController.text.trim(),
-        );
+        await widget.as?.GooglesignInAndLink(_usrnameController.text.trim(), _pswrdController.text.trim());
 
         addUserDetails(
           FirebaseAuth.instance.currentUser!.uid,
@@ -61,9 +66,9 @@ class _RegisterPageState extends State<RegisterPage> {
           int.parse(_ageController.text.trim())
         );
         Navigator.pop(context);
+        Navigator.pop(context);
       }
       else{
-        print("ERROR");
         Navigator.pop(context);
         PassNotMatchAlert();
       }
@@ -117,6 +122,11 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        foregroundColor: Colors.grey.shade300,
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -127,14 +137,14 @@ class _RegisterPageState extends State<RegisterPage> {
           
                 //logo
                 Text(
-                  "Hello There",
+                  "Welcome",
                   style: GoogleFonts.bebasNeue(fontSize: 52),
                 ),
           
                 SizedBox(height:10),
                 //welcome back
                 Text(
-                  "Let\'s create an account for you",
+                  "Please enter your details",
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 16,
@@ -143,7 +153,27 @@ class _RegisterPageState extends State<RegisterPage> {
           
                 SizedBox(height: 30),
 
-                MyTextField(controller: _usrnameController, hintText: "Email", obscureText: false),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: TextField(
+                      controller: _usrnameController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        hintText: "Email",
+                        hintStyle: TextStyle(color: Colors.grey.shade500),
+                      ),
+                    ),
+                  ),
                 
                 SizedBox(height: 10),
 
@@ -168,25 +198,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: 20),
 
                 MyButton(onTap: signUserUp, text: "Register"),
-          
-                SizedBox(height: 20),
-                
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Already a member?"),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: Text(
-                        "Login Now",
-                        style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  ],
-                )
           
               ],
               ),

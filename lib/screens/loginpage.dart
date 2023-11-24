@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:miniproject/components/imagetile.dart';
 import 'package:miniproject/components/mybutton.dart';
 import 'package:miniproject/components/mytextfield.dart';
+import 'package:miniproject/screens/email_exist_google.dart';
 import 'package:miniproject/screens/forgot_pw_page.dart';
+import 'package:miniproject/screens/google_register.dart';
 import 'package:miniproject/services/authservice.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,6 +20,62 @@ class _LoginPageState extends State<LoginPage> {
   final usrnameController = TextEditingController();
 
   final pswrdController = TextEditingController();
+
+  final _authpassController = TextEditingController();
+
+  final AuthService as = AuthService();
+
+  Future signInWithGoogle() async {
+    showDialog(
+        context: context,
+        builder: (context){
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+    await as.setGUser();
+
+    int a = await as.checkUserStat();
+
+    Navigator.pop(context);
+
+    if(a==-1){}
+    else if(a==0){
+      Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context){
+            return GoogleRegisterPage(email: as.getUserEmail(), as: as);
+          }
+          )
+        );
+    }
+    else if(a==1){
+      Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context){
+            return EmailExistGoogle(email: as.getUserEmail(), authService: as);
+          }
+          )
+        );
+    }
+    else{
+      showDialog(
+        context: context,
+        builder: (context){
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
+      await as.signInWithGoogle();
+      Navigator.pop(context);
+    }
+
+    // as.gUsersOut();
+  }
 
   void signUserIn () async {
     showDialog(
@@ -168,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ImageTile(imagepath: "lib/images/google.png", onTap: AuthService().signInWithGoogle),
+                    ImageTile(imagepath: "lib/images/google.png", onTap: signInWithGoogle),
                     const SizedBox(width: 15),
                     ImageTile(imagepath: "lib/images/outlook.png", onTap:  (){})
                   ],

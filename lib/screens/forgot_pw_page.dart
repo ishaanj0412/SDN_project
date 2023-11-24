@@ -23,10 +23,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Future passwordReset(String email) async {
     try{
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      Navigator.pop(context);
       showDialog(
         context: context,
         builder: (context){
-          // Navigator.pop(context);
           return AlertDialog(
             title: Text("Password reset link sent!"),
           );
@@ -52,6 +52,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
+        foregroundColor: Colors.grey.shade300,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
