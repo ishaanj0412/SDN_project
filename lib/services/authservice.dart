@@ -168,7 +168,6 @@ class GitHubAuthService{
     );
 
     if (response.statusCode == 200) {
-      // Parse the response to get user's email
       String? em = extractEmails(response.body);
       return em;
     } else {
@@ -178,10 +177,8 @@ class GitHubAuthService{
   }
 
   dynamic extractEmails(String responseBody) {
-  // Parse the JSON string
     List<dynamic> emails = jsonDecode(responseBody);
 
-    // Find the primary email object
     var primaryEmailObj = emails.firstWhere((emailObj) => emailObj['primary'] == true,
         orElse: () => null);
 
@@ -190,7 +187,7 @@ class GitHubAuthService{
       return primaryEmail;
     }
 
-    return null; // If no primary email found
+    return null;
   }
 
   Future <int> checkUserStat(String email) async{

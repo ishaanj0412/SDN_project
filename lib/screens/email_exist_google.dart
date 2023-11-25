@@ -14,6 +14,12 @@ class EmailExistAuth extends StatefulWidget {
 
 class _EmailExistAuthState extends State<EmailExistAuth> {
   final _authpassController = TextEditingController();
+
+  @override
+  void dispose(){
+    _authpassController.dispose();
+    super.dispose();
+  }
   
   void wrongPassAlert(){
     showDialog(

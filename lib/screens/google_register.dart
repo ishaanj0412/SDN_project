@@ -28,6 +28,17 @@ class _AuthRegisterPageState extends State<AuthRegisterPage> {
   final _ageController = TextEditingController();
 
   @override
+  void dispose(){
+    _usrnameController.dispose();
+    _pswrdController.dispose();
+    _cnfrmpswrdController.dispose();
+    _firstnmController.dispose();
+    _lastnmController.dispose();
+    _ageController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState(){
     super.initState();
     _usrnameController.text = widget.email!;

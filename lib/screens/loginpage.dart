@@ -26,6 +26,13 @@ class _LoginPageState extends State<LoginPage> {
 
   final GitHubAuthService gs = GitHubAuthService();
 
+  @override
+  void dispose(){
+    _usrnameController.dispose();
+    _pswrdController.dispose();
+    super.dispose();
+  }
+
   Future signInWithGoogle() async {
     showDialog(
         context: context,

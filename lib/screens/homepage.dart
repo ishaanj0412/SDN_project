@@ -8,7 +8,6 @@ class HomePage extends StatelessWidget {
 
   void signOut(){
     FirebaseAuth.instance.signOut();
-    // AuthService.signOutGoogle();
   }
 
   @override

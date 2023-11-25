@@ -26,6 +26,17 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _ageController = TextEditingController();
 
+  @override
+  void dispose(){
+    _usrnameController.dispose();
+    _pswrdController.dispose();
+    _cnfrmpswrdController.dispose();
+    _firstnmController.dispose();
+    _lastnmController.dispose();
+    _ageController.dispose();
+    super.dispose();
+  }
+
   Future addUserDetails(String uid, String fn, String ln, String em, int age) async {
     await FirebaseFirestore.instance.collection('users').add({
       'uid': uid,
@@ -187,7 +198,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     )
                   ],
                 )
-          
               ],
               ),
           ) 

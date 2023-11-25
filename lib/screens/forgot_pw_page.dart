@@ -12,11 +12,11 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   
-  final emailController = TextEditingController();
+  final _emailController = TextEditingController();
 
   @override
   void dispose(){
-    emailController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -67,9 +67,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
             ),
           SizedBox(height: 30),
-          MyTextField(controller: emailController, hintText: "Email", obscureText: false),
+          MyTextField(controller: _emailController, hintText: "Email", obscureText: false),
           SizedBox(height: 30),
-          MyButton(onTap: (){passwordReset(emailController.text.trim());}, text: "Reset Password")
+          MyButton(onTap: (){passwordReset(_emailController.text.trim());}, text: "Reset Password")
         ],
       )
     );
