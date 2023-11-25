@@ -116,7 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[900],
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -127,8 +127,8 @@ class _RegisterPageState extends State<RegisterPage> {
           
                 //logo
                 Text(
-                  "Hello There",
-                  style: GoogleFonts.bebasNeue(fontSize: 52),
+                  "SDN Signup",
+                  style: GoogleFonts.bebasNeue(fontSize: 52, color: Colors.green),
                 ),
           
                 SizedBox(height:10),
@@ -136,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Text(
                   "Let\'s create an account for you",
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
@@ -174,7 +174,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already a member?"),
+                    Text("Already a member?", style: TextStyle(color: Colors.white)),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,

@@ -4,18 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:miniproject/components/mybutton.dart';
 import 'package:miniproject/components/mytextfield.dart';
-import 'package:miniproject/services/authservice.dart';
 
-class GoogleRegisterPage extends StatefulWidget {
+class AuthRegisterPage extends StatefulWidget {
   final String? email;
-  final AuthService? as;
-  GoogleRegisterPage({super.key, required this.email, required this.as});
+  final dynamic as;
+  AuthRegisterPage({super.key, required this.email, required this.as});
 
   @override
-  State<GoogleRegisterPage> createState() => _GoogleRegisterPageState();
+  State<AuthRegisterPage> createState() => _AuthRegisterPageState();
 }
 
-class _GoogleRegisterPageState extends State<GoogleRegisterPage> {
+class _AuthRegisterPageState extends State<AuthRegisterPage> {
   final _usrnameController = TextEditingController();
 
   final _pswrdController = TextEditingController();
@@ -56,7 +55,7 @@ class _GoogleRegisterPageState extends State<GoogleRegisterPage> {
 
     try{
       if(_cnfrmpswrdController.text.trim() == _pswrdController.text.trim()){
-        await widget.as?.GooglesignInAndLink(_usrnameController.text.trim(), _pswrdController.text.trim());
+        await widget.as?.signInAndLink(_usrnameController.text.trim(), _pswrdController.text.trim());
 
         addUserDetails(
           FirebaseAuth.instance.currentUser!.uid,
@@ -121,11 +120,11 @@ class _GoogleRegisterPageState extends State<GoogleRegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey.shade900,
         elevation: 0,
-        foregroundColor: Colors.grey.shade300,
+        foregroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Center(
@@ -138,7 +137,7 @@ class _GoogleRegisterPageState extends State<GoogleRegisterPage> {
                 //logo
                 Text(
                   "Welcome",
-                  style: GoogleFonts.bebasNeue(fontSize: 52),
+                  style: GoogleFonts.bebasNeue(fontSize: 52, color: Colors.green),
                 ),
           
                 SizedBox(height:10),
@@ -146,7 +145,7 @@ class _GoogleRegisterPageState extends State<GoogleRegisterPage> {
                 Text(
                   "Please enter your details",
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
@@ -164,7 +163,7 @@ class _GoogleRegisterPageState extends State<GoogleRegisterPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
+                          borderSide: BorderSide(color: Colors.blue, width: 3),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         fillColor: Colors.grey.shade200,

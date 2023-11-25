@@ -48,11 +48,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey.shade900,
         elevation: 0,
-        foregroundColor: Colors.grey.shade300,
+        foregroundColor: Colors.white,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -61,8 +61,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             "Enter your email for a password reset link", 
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.grey[700],
+              color: Colors.white,
               fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
             ),
           SizedBox(height: 30),

@@ -12,13 +12,13 @@ class ImageTile extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.grey.shade200,
+          border: Border.all(color: Colors.grey.shade300, width: 4),
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
         ),
         child: Image.asset(
           imagepath,
-          height: 30,
+          height: 25,
           ),
       ),
     );

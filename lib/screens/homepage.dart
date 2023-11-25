@@ -14,12 +14,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        actions: [IconButton(onPressed: signOut, icon: Icon(Icons.logout), color: Colors.white,)]
+        backgroundColor: Colors.grey.shade900,
+        actions: [IconButton(onPressed: signOut, icon: Icon(Icons.logout), color: Colors.red,)]
         ),
       body: Center(
-        child: Text("LOGGED IN AS: " + user.email!),
+        child: Text("LOGGED IN AS: " + user.email!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }

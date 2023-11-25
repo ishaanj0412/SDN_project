@@ -2,18 +2,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:miniproject/components/mytextfield.dart';
-import 'package:miniproject/services/authservice.dart';
 
-class EmailExistGoogle extends StatefulWidget {
+class EmailExistAuth extends StatefulWidget {
   final String? email;
-  final AuthService? authService;
-  const EmailExistGoogle({super.key, required this.email, required this.authService});
+  final dynamic authService;
+  const EmailExistAuth({super.key, required this.email, required this.authService});
 
   @override
-  State<EmailExistGoogle> createState() => _EmailExistGoogleState();
+  State<EmailExistAuth> createState() => _EmailExistAuthState();
 }
 
-class _EmailExistGoogleState extends State<EmailExistGoogle> {
+class _EmailExistAuthState extends State<EmailExistAuth> {
   final _authpassController = TextEditingController();
   
   void wrongPassAlert(){
@@ -30,10 +29,11 @@ class _EmailExistGoogleState extends State<EmailExistGoogle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey.shade900,
         elevation: 0,
-        foregroundColor: Colors.grey.shade300,
+        foregroundColor: Colors.white,
         leading: BackButton(onPressed: (){Navigator.pop(context); widget.authService!.gUsersOut();}),
         
       ),
@@ -42,8 +42,8 @@ class _EmailExistGoogleState extends State<EmailExistGoogle> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text("An account already exists with the same email. To link both the accounts, please enter the password.", style: TextStyle(fontSize: 16)),
+              padding: const EdgeInsets.symmetric(horizontal: 28),
+              child: Text("An account already exists with the same email. To link both the accounts, please enter the password.", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
             ),
             SizedBox(height: 15),
             MyTextField(controller: _authpassController, hintText: "Password", obscureText: true),
@@ -63,7 +63,7 @@ class _EmailExistGoogleState extends State<EmailExistGoogle> {
                           email: widget.authService!.getUserEmail(), 
                           password: _authpassController.text
                         );
-                        widget.authService!.GooglesignInAndLink(widget.email!, _authpassController.text.trim());
+                        widget.authService!.signInAndLink(widget.email!, _authpassController.text.trim());
                         Navigator.pop(context);
                         Navigator.pop(context);
                       } on FirebaseAuthException catch (e){
@@ -77,7 +77,7 @@ class _EmailExistGoogleState extends State<EmailExistGoogle> {
                   padding: EdgeInsets.all(25),
                   margin: EdgeInsets.symmetric(horizontal: 25),
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: const Color.fromARGB(255, 71, 39, 126),
                     borderRadius: BorderRadius.circular(15),
                     ),
                   child: Center(

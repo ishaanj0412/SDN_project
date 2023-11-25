@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:miniproject/components/imagetile.dart';
 import 'package:miniproject/components/mybutton.dart';
 import 'package:miniproject/components/mytextfield.dart';
@@ -17,13 +18,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final usrnameController = TextEditingController();
+  final _usrnameController = TextEditingController();
 
-  final pswrdController = TextEditingController();
+  final _pswrdController = TextEditingController();
 
-  final _authpassController = TextEditingController();
+  final GoogleAuthService as = GoogleAuthService();
 
-  final AuthService as = AuthService();
+  final GitHubAuthService gs = GitHubAuthService();
 
   Future signInWithGoogle() async {
     showDialog(
@@ -46,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
         context, 
         MaterialPageRoute(
           builder: (context){
-            return GoogleRegisterPage(email: as.getUserEmail(), as: as);
+            return AuthRegisterPage(email: as.getUserEmail(), as: as);
           }
           )
         );
@@ -56,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
         context, 
         MaterialPageRoute(
           builder: (context){
-            return EmailExistGoogle(email: as.getUserEmail(), authService: as);
+            return EmailExistAuth(email: as.getUserEmail(), authService: as);
           }
           )
         );
@@ -90,8 +91,8 @@ class _LoginPageState extends State<LoginPage> {
     try{
       
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: usrnameController.text, 
-        password: pswrdController.text
+        email: _usrnameController.text.trim(), 
+        password: _pswrdController.text.trim()
       );
       Navigator.pop(context);
     } on FirebaseAuthException catch (e){
@@ -131,27 +132,33 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[900],
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height:40),
+                SizedBox(height:30),
           
                 //logo
                 Icon(
-                  Icons.lock,
+                  Icons.android,
                   size: 100,
+                  color: Colors.green,
+                ),
+
+                Text(
+                  "SDN Login",
+                  style: GoogleFonts.bebasNeue(fontSize: 52, color: Colors.white),
                 ),
           
-                SizedBox(height: 70),
+                SizedBox(height: 30),
                 //welcome back
                 Text(
                   "Welcome back you\'ve been missed!",
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
@@ -159,11 +166,11 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 30),
           
                 //username
-                MyTextField(controller: usrnameController, hintText: "Email", obscureText: false),
+                MyTextField(controller: _usrnameController, hintText: "Email", obscureText: false),
                 
                 SizedBox(height: 15),
                 //password
-                MyTextField(controller: pswrdController, hintText: "Password", obscureText: true),
+                MyTextField(controller: _pswrdController, hintText: "Password", obscureText: true),
           
                 SizedBox(height: 15),
                 //forgot password
@@ -196,26 +203,26 @@ class _LoginPageState extends State<LoginPage> {
                 //sign in button
                 MyButton(onTap: signUserIn, text: "Sign In"),
           
-                SizedBox(height: 70),
+                SizedBox(height: 40),
                 //or continue via following options
                 Row(
                   children: [
                     Expanded(
                       child: Divider(
                         thickness: 0.5,
-                        color: Colors.grey.shade400,
+                        color: Colors.grey.shade600,
                       ),
                     ),
           
                     Text(
-                      "Or Continue With",
-                      style: TextStyle(color: Colors.grey.shade700),
+                      " Or Continue With ",
+                      style: TextStyle(color: Colors.white),
                       ),
           
                     Expanded(
                       child: Divider(
                         thickness: 0.5,
-                        color: Colors.grey.shade400,
+                        color: Colors.grey.shade600,
                       ),
                     ),
                   ],
@@ -228,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     ImageTile(imagepath: "lib/images/google.png", onTap: signInWithGoogle),
                     const SizedBox(width: 15),
-                    ImageTile(imagepath: "lib/images/outlook.png", onTap:  (){})
+                    ImageTile(imagepath: "lib/images/outlook.png", onTap: (){dynamic value = gs.githubSignIn(context); print(value);})
                   ],
                 ),
           
@@ -237,7 +244,7 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Not a member?"),
+                    Text("Not a member?", style: TextStyle(color: Colors.white)),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
