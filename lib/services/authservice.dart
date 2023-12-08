@@ -207,7 +207,7 @@ class GitHubAuthService{
   }
 
   Future <dynamic> signInAndLink(String email, String password) async{
-    AuthCredential credential = GithubAuthProvider.credential(this.accessToken);
+    AuthCredential credential = GithubAuthProvider.credential(accessToken);
     try{
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email, 
@@ -240,6 +240,6 @@ class GitHubAuthService{
   }
 
   String getUserEmail(){
-    return this.email!;
+    return email!;
   }
 }
