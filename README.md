@@ -31,6 +31,10 @@ tu Software. We can install it directly from there.
 
 This concludes the setup for Flutter.
 
+## Clone the project
+
+Clone the project from the repository: https://github.com/ishaanj0412/SDN_project
+
 ## Running the application
 
 1) Start the emulator or connect or android mobile with your laptop and allow for USB debugging.
